@@ -52,7 +52,7 @@ write_files:
   - content: |
       Explanation: get obfs4proxy from stable-backports
       Package: obfs4proxy
-      Pin: release a=bullseye-backports
+      Pin: release a=stable-backports
       Pin-Priority: 500
     path: /etc/apt/preferences.d/obfs4proxy.pref
     owner: root:root
