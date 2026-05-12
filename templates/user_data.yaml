@@ -13,13 +13,10 @@ apt:
     };
   preserve_sources_list: true
   sources:
-    torproject.sources:
+    torproject.list:
       source: |
-        Types: deb deb-src
-        URIs: https://deb.torproject.org/torproject.org/
-        Suites: $RELEASE
-        Components: main
-        Signed-By: $KEY_FILE
+        deb     [signed-by=$KEY_FILE] https://deb.torproject.org/torproject.org $RELEASE main
+        deb-src [signed-by=$KEY_FILE] https://deb.torproject.org/torproject.org $RELEASE main
       key: ${tor_apt_key}
     debian-backports.list:
       source: |
