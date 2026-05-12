@@ -13,10 +13,13 @@ apt:
     };
   preserve_sources_list: true
   sources:
-    torproject.list:
+    torproject.sources:
       source: |
-        deb     https://deb.torproject.org/torproject.org $RELEASE main
-        deb-src https://deb.torproject.org/torproject.org $RELEASE main
+        Types: deb deb-src
+        URIs: https://deb.torproject.org/torproject.org/
+        Suites: $RELEASE
+        Components: main
+        Signed-By: $KEY_FILE
       key: ${tor_apt_key}
     debian-backports.list:
       source: |
@@ -30,13 +33,6 @@ runcmd:
   - echo unattended-upgrades unattended-upgrades/enable_auto_updates boolean true | debconf-set-selections
   - DEBIAN_FRONTEND=noninteractive dpkg-reconfigure unattended-upgrades
   - sysctl -p /etc/sysctl.d/50-tcp_bbr.conf
-
-# Install Tailscale if auth key is provided
-  - |
-    if [ -n "${tailscale_auth}" ]; then
-      curl -fsSL https://tailscale.com/install.sh | sh
-      tailscale up --authkey ${tailscale_auth} --advertise-tags="${tailscale_tags}" --ssh;
-    fi
 
 write_files:
   - content: ${torrc}
